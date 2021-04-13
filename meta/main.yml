@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: postfix_email_client
-  namespace: infra-monkey
+  namespace: infra_monkey
   author: Antoine Gatineau
   description: Config postfix email client
   company: Infra-Monkey
