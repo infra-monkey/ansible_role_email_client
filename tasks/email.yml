@@ -32,7 +32,7 @@
   service:
     name: postfix
     state: restarted
-    enabled: yes
+    enabled: true
 - name: "Send test email"
   mail:
     to: "{{ test_email_address }}"
