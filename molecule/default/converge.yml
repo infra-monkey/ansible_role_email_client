@@ -9,7 +9,7 @@
     relayhost: "smtp.example.com:25"
     email_account: "test@example.com"
     email_password: "SuperPassw0rd"
- pre_tasks:
+  pre_tasks:
     - name: add ipv6 localhost in /etc/hosts
       line_in_file:
         path: /etc/hosts
