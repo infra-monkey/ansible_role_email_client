@@ -1,29 +1,4 @@
 ---
-- name: "Install postfix"
-  package:
-    name: "{{ pkg_postfix }},{{ pkg_sasl }}"
-    state: present
-- name: "Configure email server"
-  template:
-    src: main.j2
-    dest: /etc/postfix/main.cf
-    owner: root
-    group: root
-    mode: 0644
-- name: "Configure email account"
-  template:
-    src: sasl_passwd.j2
-    dest: /etc/postfix/sasl_passwd
-    owner: root
-    group: root
-    mode: 0600
-- name: "Configure outgoing email"
-  template:
-    src: generic.j2
-    dest: /etc/postfix/generic
-    owner: root
-    group: root
-    mode: 0644
 - name: "compile email account"
   command: "postmap /etc/postfix/sasl_passwd"
   register: diff_cmd
