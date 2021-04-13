@@ -3,4 +3,4 @@
   hosts: all
   connection: local
   roles:
-    - role: 'postfix_email_client'
+    - role: "infra_monkey.postfix_email_client"
