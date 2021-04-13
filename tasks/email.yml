@@ -1,0 +1,42 @@
+---
+- name: "Install postfix"
+  package:
+    name: "{{ pkg_postfix }},{{ pkg_sasl }}"
+    state: present
+- name: "Configure email server"
+  template:
+    src: main.j2
+    dest: /etc/postfix/main.cf
+    owner: root
+    group: root
+    mode: 0644
+- name: "Configure email account"
+  template:
+    src: sasl_passwd.j2
+    dest: /etc/postfix/sasl_passwd
+    owner: root
+    group: root
+    mode: 0600
+- name: "Configure outgoing email"
+  template:
+    src: generic.j2
+    dest: /etc/postfix/generic
+    owner: root
+    group: root
+    mode: 0644
+- name: "compile email account"
+  command: "postmap /etc/postfix/sasl_passwd"
+- name: "compile generic map"
+  command: "postmap /etc/postfix/generic"
+- name: "Restart postfix"
+  service:
+    name: postfix
+    state: restarted
+    enabled: yes
+- name: "Send test email"
+  mail:
+    to: "{{ test_email_address }}"
+    subject: "Test Email"
+    body: "System {{ ansible_hostname }} has been successfully configured."
+  when: send_test_email
+...
