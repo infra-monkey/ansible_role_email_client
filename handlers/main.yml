@@ -2,13 +2,13 @@
 - name: "compile email account"
   command: "postmap /etc/postfix/sasl_passwd"
   register: diff_cmd
-  failed_when: diff_cmd.rc >= 2
-  changed_when: diff_cmd.rc == 1
+  failed_when: diff_cmd.rc !=0
+  changed_when: diff_cmd.rc == 0
 - name: "compile generic map"
   command: "postmap /etc/postfix/generic"
   register: diff_cmd
-  failed_when: diff_cmd.rc >= 2
-  changed_when: diff_cmd.rc == 1
+  failed_when: diff_cmd.rc !=0
+  changed_when: diff_cmd.rc == 0
 - name: "Restart postfix"
   service:
     name: postfix

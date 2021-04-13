@@ -2,6 +2,7 @@
 - name: Converge
   hosts: all
   connection: local
+  become: true
   vars:
     email_enabled: true
     email_address: "test@example.com"
