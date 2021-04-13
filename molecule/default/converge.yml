@@ -11,7 +11,7 @@
     email_password: "SuperPassw0rd"
   pre_tasks:
     - name: add ipv6 localhost in /etc/hosts
-      line_in_file:
+      lineinfile:
         path: /etc/hosts
         line: "::1         localhost localhost.localdomain localhost6 localhost6.localdomain6"
         owner: root
