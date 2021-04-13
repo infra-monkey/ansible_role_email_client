@@ -1,0 +1,4 @@
+---
+pkg_postfix: postfix,mailutils
+pkg_sasl: libsasl2-2
+...

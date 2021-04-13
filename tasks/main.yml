@@ -1,0 +1,7 @@
+---
+- name: "Include os specific variables"
+  include_vars: "packages-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+- name: "Configure email if needed"
+  include_tasks: email.yml
+  when: email_enabled
+...
