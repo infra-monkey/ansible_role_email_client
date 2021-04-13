@@ -1,5 +1,7 @@
 ---
 galaxy_info:
+  role_name: postfix_email_client
+  namespace: infra-monkey
   author: Antoine Gatineau
   description: Config postfix email client
   company: Infra-Monkey
@@ -8,7 +10,6 @@ galaxy_info:
   platforms:
     - name: Redhat
       versions:
-        - 6
         - 7
         - 8
     - name: Debian
