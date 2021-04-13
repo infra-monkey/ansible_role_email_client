@@ -9,13 +9,5 @@
     relayhost: "smtp.example.com:25"
     email_account: "test@example.com"
     email_password: "SuperPassw0rd"
-  pre_tasks:
-    - name: add ipv6 localhost in /etc/hosts
-      lineinfile:
-        path: /etc/hosts
-        line: "::1         localhost localhost.localdomain localhost6 localhost6.localdomain6"
-        owner: root
-        group: root
-        mode: '0644'
   roles:
     - role: "infra_monkey.postfix_email_client"
