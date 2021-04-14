@@ -1,0 +1,23 @@
+---
+- name: "compile email account"
+  command: "postmap /etc/postfix/sasl_passwd"
+  register: diff_cmd
+  failed_when: diff_cmd.rc !=0
+  changed_when: diff_cmd.rc == 0
+- name: "compile generic map"
+  command: "postmap /etc/postfix/generic"
+  register: diff_cmd
+  failed_when: diff_cmd.rc !=0
+  changed_when: diff_cmd.rc == 0
+- name: "Restart postfix"
+  service:
+    name: postfix
+    state: restarted
+    enabled: true
+- name: "Send test email"
+  mail:
+    to: "{{ test_email_address }}"
+    subject: "Test Email"
+    body: "System {{ ansible_hostname }} has been successfully configured."
+  when: send_test_email
+...
