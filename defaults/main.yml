@@ -1,4 +1,10 @@
 ---
 email_enabled: false
+email_address: "test@example.com"
+relayhost: "smtp.example.com:25"
+email_account: "test@example.com"
+email_password: "SuperPassw0rd"
+
 send_test_email: false
+test_email_address: "test@example.com"
 ...
