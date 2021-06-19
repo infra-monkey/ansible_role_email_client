@@ -6,6 +6,8 @@
     package:
       name: "{{ pkg_postfix }},{{ pkg_sasl }}"
       state: present
+    notify:
+      - "Restart postfix"
   - name: "Configure email server"
     template:
       src: main.j2
@@ -13,6 +15,8 @@
       owner: root
       group: root
       mode: 0644
+    notify:
+      - "Restart postfix"
   - name: "Configure email account"
     template:
       src: sasl_passwd.j2
