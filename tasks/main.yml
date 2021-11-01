@@ -1,6 +1,12 @@
 ---
 - name: "Include os specific variables"
   include_vars: "packages-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+
+- name: "Update Debian apt cache"
+  apt:
+    update_cache: true
+  when: ansible_os_family == "Debian"
+
 - block:
   - name: "Install postfix"
     package:
