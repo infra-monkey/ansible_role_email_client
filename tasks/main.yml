@@ -1,43 +1,49 @@
 ---
 - name: "Include os specific variables"
   include_vars: "packages-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+
+- name: "Update Debian apt cache"
+  apt:
+    update_cache: true
+  when: ansible_os_family == "Debian"
+
 - block:
-  - name: "Install postfix"
-    package:
-      name: "{{ pkg_postfix }},{{ pkg_sasl }}"
-      state: present
-    notify:
-      - "Restart postfix"
-  - name: "Configure email server"
-    template:
-      src: main.j2
-      dest: /etc/postfix/main.cf
-      owner: root
-      group: root
-      mode: 0644
-    notify:
-      - "Restart postfix"
-  - name: "Configure email account"
-    template:
-      src: sasl_passwd.j2
-      dest: /etc/postfix/sasl_passwd
-      owner: root
-      group: root
-      mode: 0600
-    notify:
-      - "compile email account"
-      - "Restart postfix"
-      - "Send test email"
-  - name: "Configure outgoing email"
-    template:
-      src: generic.j2
-      dest: /etc/postfix/generic
-      owner: root
-      group: root
-      mode: 0644
-    notify:
-      - "compile generic map"
-      - "Restart postfix"
-      - "Send test email"
+    - name: "Install postfix"
+      package:
+        name: "{{ pkg_postfix }},{{ pkg_sasl }}"
+        state: present
+      notify:
+        - "Restart postfix"
+    - name: "Configure email server"
+      template:
+        src: main.j2
+        dest: /etc/postfix/main.cf
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - "Restart postfix"
+    - name: "Configure email account"
+      template:
+        src: sasl_passwd.j2
+        dest: /etc/postfix/sasl_passwd
+        owner: root
+        group: root
+        mode: 0600
+      notify:
+        - "compile email account"
+        - "Restart postfix"
+        - "Send test email"
+    - name: "Configure outgoing email"
+      template:
+        src: generic.j2
+        dest: /etc/postfix/generic
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - "compile generic map"
+        - "Restart postfix"
+        - "Send test email"
   when: email_enabled
 ...
