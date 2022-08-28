@@ -1,4 +1,4 @@
 ---
-pkg_postfix: postfix,mailx
+pkg_postfix: postfix,s-nail
 pkg_sasl: cyrus-sasl,cyrus-sasl-plain
 ...
