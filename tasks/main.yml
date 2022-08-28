@@ -1,21 +1,21 @@
 ---
 - name: "Include os specific variables"
-  include_vars: "packages-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+  ansible.builtin.include_vars: "packages-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
 
 - name: "Update Debian apt cache"
-  apt:
+  ansible.builtin.apt:
     update_cache: true
   when: ansible_os_family == "Debian"
 
 - block:
     - name: "Install postfix"
-      package:
+      ansible.builtin.package:
         name: "{{ pkg_postfix }},{{ pkg_sasl }}"
         state: present
       notify:
         - "Restart postfix"
     - name: "Configure email server"
-      template:
+      ansible.builtin.template:
         src: main.j2
         dest: /etc/postfix/main.cf
         owner: root
@@ -24,26 +24,25 @@
       notify:
         - "Restart postfix"
     - name: "Configure email account"
-      template:
+      ansible.builtin.template:
         src: sasl_passwd.j2
         dest: /etc/postfix/sasl_passwd
         owner: root
         group: root
         mode: 0600
       notify:
-        - "compile email account"
+        - "Compile email account"
         - "Restart postfix"
         - "Send test email"
     - name: "Configure outgoing email"
-      template:
+      ansible.builtin.template:
         src: generic.j2
         dest: /etc/postfix/generic
         owner: root
         group: root
         mode: 0644
       notify:
-        - "compile generic map"
+        - "Compile generic map"
         - "Restart postfix"
         - "Send test email"
   when: email_enabled
-...
