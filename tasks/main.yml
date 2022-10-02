@@ -8,6 +8,7 @@
   when: ansible_os_family == "Debian"
 
 - name: "Install block"
+  when: email_enabled
   block:
     - name: "Install postfix"
       ansible.builtin.package:
@@ -50,5 +51,3 @@
         - "Compile generic map"
         - "Restart postfix"
         - "Send test email"
-
-  when: email_enabled
