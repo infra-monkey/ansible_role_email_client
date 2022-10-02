@@ -20,6 +20,7 @@ jobs:
         distro:
           - centos7
           - centos8
+          - dokken/centos-stream-9
           #- centos9
           - debian9
           - debian10
