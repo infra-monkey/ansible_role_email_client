@@ -8,6 +8,7 @@
   when: ansible_os_family == "Debian"
 
 - name: "Install block"
+  when: email_enabled
   block:
     - name: "Install postfix"
       ansible.builtin.package:
@@ -15,6 +16,7 @@
         state: present
       notify:
         - "Restart postfix"
+
     - name: "Configure email server"
       ansible.builtin.template:
         src: main.j2
@@ -24,6 +26,7 @@
         mode: 0644
       notify:
         - "Restart postfix"
+
     - name: "Configure email account"
       ansible.builtin.template:
         src: sasl_passwd.j2
@@ -35,6 +38,8 @@
         - "Compile email account"
         - "Restart postfix"
         - "Send test email"
+      when: email_account is defined and email_password is defined
+
     - name: "Configure outgoing email"
       ansible.builtin.template:
         src: generic.j2
@@ -46,4 +51,3 @@
         - "Compile generic map"
         - "Restart postfix"
         - "Send test email"
-  when: email_enabled
