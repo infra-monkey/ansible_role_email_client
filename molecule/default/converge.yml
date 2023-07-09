@@ -11,4 +11,4 @@
     email_password: "SuperPassw0rd"
 
   roles:
-    - role: ansible_role_postfix_client
+    - role: ansible_role_postfix_email_client
